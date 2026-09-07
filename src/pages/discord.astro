@@ -1,0 +1,84 @@
+---
+import Base from '../layouts/Base.astro';
+import Icon from '../components/Icon.astro';
+import { DISCORD_INVITE, SKOOL_URL } from '../config';
+
+const inside = [
+  'Open chat with members running the protocols',
+  'Occasional free write-ups and sauce',
+  'A place to lurk before committing to the paid community',
+];
+---
+
+<Base
+  title="Free Discord | Biomaxxer"
+  description="The free Biomaxxer Discord: open chat, an introduction to the network, and a place to lurk before joining the paid Skool community."
+>
+  <section class="section">
+    <div class="container discord">
+      <p class="eyebrow">Free community</p>
+      <h1 class="h2">The open room.</h1>
+      <p class="lede">
+        Free to join, no card, no subscriptions. The Discord is where you get a
+        feel for how this community operates before the paid system.
+      </p>
+
+      <ul class="discord__list">
+        {
+          inside.map((item) => (
+            <li>
+              <Icon name="check" size={20} class="discord__check" />
+              <span>{item}</span>
+            </li>
+          ))
+        }
+      </ul>
+
+      <div class="cta-row">
+        <a class="btn btn--primary" href={DISCORD_INVITE} target="_blank" rel="noopener noreferrer">
+          Join the Discord
+        </a>
+      </div>
+      <p class="cta-note">
+        Ready for the full system?
+        <a class="discord__upsell" href={SKOOL_URL} target="_blank" rel="noopener noreferrer">
+          Join the paid community on Skool.
+        </a>
+      </p>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .discord {
+    max-width: calc(var(--container-sm) + 2 * var(--gutter));
+  }
+
+  .discord__list {
+    list-style: none;
+    margin: var(--sp-8) 0 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: var(--sp-3);
+    color: var(--c-text-muted);
+  }
+
+  .discord__list li {
+    display: flex;
+    gap: var(--sp-3);
+    align-items: flex-start;
+  }
+
+  /* Astro scoped styles cannot reach the Icon component's own svg */
+  .discord__list :global(svg) {
+    color: var(--c-text-muted);
+    flex-shrink: 0;
+    margin-top: var(--sp-1);
+  }
+
+  .discord__upsell {
+    color: var(--c-accent);
+    text-underline-offset: 0.2em;
+  }
+</style>

@@ -1,0 +1,5 @@
+# keep the upload lean — Vercel builds from source and only needs the app
+masters
+node_modules
+dist
+.astro

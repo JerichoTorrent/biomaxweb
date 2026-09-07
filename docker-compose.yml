@@ -1,0 +1,9 @@
+services:
+  web:
+    build: .
+    image: biomaxxer-site
+    container_name: biomaxxer-site
+    ports:
+      # host:container — put the client's TLS-terminating proxy in front
+      - '8080:80'
+    restart: unless-stopped

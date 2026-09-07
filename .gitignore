@@ -1,0 +1,27 @@
+# build output
+dist/
+# generated types
+.astro/
+
+# dependencies
+node_modules/
+
+# logs
+npm-debug.log*
+pnpm-debug.log*
+
+# environment
+.env
+.env.production
+
+# macOS
+.DS_Store
+
+# jetbrains / vscode local
+.idea/
+.vscode/*
+!.vscode/extensions.json
+
+# client asset masters (109MB video etc.) stay out of git — see ASSETS-NEEDED.md
+masters/
+.vercel

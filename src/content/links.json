@@ -1,0 +1,163 @@
+[
+  {
+    "id": "skool",
+    "order": 1,
+    "label": "Join the Biomaxxing community",
+    "url": "https://skool.com/biomaxxing",
+    "kind": "community",
+    "icon": "community",
+    "image": "link-skool",
+    "note": "Protocols, scientific write-ups, sources; the private community.",
+    "placeholder": false
+  },
+  {
+    "id": "consult",
+    "order": 2,
+    "label": "Book a 1:1 consultation ($120)",
+    "url": "https://buy.stripe.com/8x27sN0gI16J3Ugfr28N20m",
+    "kind": "community",
+    "icon": "protocol",
+    "note": "One hour, one written 90-day protocol.",
+    "placeholder": false
+  },
+  {
+    "id": "discord",
+    "order": 3,
+    "label": "Free Discord",
+    "url": "/discord",
+    "kind": "community",
+    "icon": "discord",
+    "note": "The open room. Lurk before you commit.",
+    "placeholder": false
+  },
+  {
+    "id": "youtube",
+    "order": 4,
+    "label": "YouTube",
+    "url": "https://www.youtube.com/@biomaxxer",
+    "kind": "social",
+    "icon": "youtube",
+    "placeholder": false
+  },
+  {
+    "id": "instagram",
+    "order": 5,
+    "label": "Instagram",
+    "url": "https://www.instagram.com/genetranscription/",
+    "kind": "social",
+    "icon": "instagram",
+    "image": "link-androlone",
+    "note": "Androlone",
+    "placeholder": false
+  },
+  {
+    "id": "tiktok",
+    "order": 6,
+    "label": "TikTok",
+    "url": "https://www.tiktok.com/@biomaxxer",
+    "kind": "social",
+    "icon": "tiktok",
+    "placeholder": false
+  },
+  {
+    "id": "x",
+    "order": 7,
+    "label": "X",
+    "url": "https://x.com/biomaxxer0",
+    "kind": "social",
+    "icon": "x",
+    "placeholder": false
+  },
+  {
+    "id": "peptiwiki",
+    "order": 8,
+    "label": "Peptide Wiki",
+    "url": "https://pepti.wiki/",
+    "kind": "content",
+    "icon": "link",
+    "note": "Learn about peptides.",
+    "placeholder": false
+  },
+  {
+    "id": "amazon",
+    "order": 9,
+    "label": "Amazon storefront",
+    "url": "https://www.amazon.com/shop/biomaxxer",
+    "kind": "sponsor",
+    "icon": "link",
+    "sponsored": true,
+    "note": "Supplements, skin care, and more. Stuff I actually use.",
+    "placeholder": false
+  },
+  {
+    "id": "algorx",
+    "order": 10,
+    "label": "AlgoRX",
+    "url": "https://app.algorx.ai/",
+    "kind": "sponsor",
+    "icon": "link",
+    "image": "link-algorx",
+    "sponsored": true,
+    "note": "TRT, bloodwork, support meds.",
+    "placeholder": false
+  },
+  {
+    "id": "ruo",
+    "order": 11,
+    "label": "RUO",
+    "url": "https://ruo.bio/",
+    "kind": "sponsor",
+    "icon": "link",
+    "image": "link-ruo",
+    "sponsored": true,
+    "note": "US domestic peptides, nootropics, and serums.",
+    "placeholder": false
+  },
+  {
+    "id": "enhancedlabs",
+    "order": 12,
+    "label": "Enhanced Labs",
+    "url": "https://enhancedlabs.com/",
+    "kind": "sponsor",
+    "icon": "link",
+    "image": "link-enhancedlabs",
+    "sponsored": true,
+    "note": "Natty+ supplements.",
+    "placeholder": false
+  },
+  {
+    "id": "bulkpeptides",
+    "order": 13,
+    "label": "BulkPeptides",
+    "url": "https://bulkpeptides.com/",
+    "kind": "sponsor",
+    "icon": "link",
+    "sponsored": true,
+    "note": "Use access code BIOMAX.",
+    "placeholder": false
+  },
+  {
+    "id": "performeds",
+    "order": 14,
+    "label": "Performeds",
+    "url": "https://performeds.com/",
+    "kind": "sponsor",
+    "icon": "link",
+    "image": "link-performeds",
+    "sponsored": true,
+    "note": "Med supplies for peptides and biohacking.",
+    "placeholder": false
+  },
+  {
+    "id": "pumpotion",
+    "order": 15,
+    "label": "Pumpotion",
+    "url": "https://pumpotion.com/",
+    "kind": "sponsor",
+    "icon": "link",
+    "image": "link-pumpotion",
+    "sponsored": true,
+    "note": "Liquid flavored tadalafil, tastes like candy. Code biomax.",
+    "placeholder": false
+  }
+]

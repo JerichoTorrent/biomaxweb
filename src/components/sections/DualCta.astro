@@ -1,0 +1,143 @@
+---
+import { SKOOL_URL, STRIPE_URL } from '../../config';
+
+/* Deliverables mirror the client's published Skool offer and the consult's
+   scope — a real comparison, not decorative bullets. */
+const community = [
+  'Group calls every week',
+  'New modules chosen by member engagement',
+  'The full guide library, pharmacology included',
+  'The ultimate sourcing vault, kept current by members',
+];
+
+const consult = [
+  'Sixty minutes, one on one',
+  'A written 90-day protocol',
+  'A bloodwork checklist for your clinic',
+  'One follow-up review of your first month',
+];
+---
+
+<section class="section section--alt" id="start" aria-labelledby="start-title">
+  <div class="container">
+    <div class="cta-panel">
+      <p class="eyebrow">Start</p>
+      <h2 class="h2" id="start-title">Two ways in.</h2>
+
+      <div class="cta-panel__grid">
+        <div class="cta-option">
+          <h3 class="h3">The community</h3>
+          <ul>
+            {community.map((item) => <li>{item}</li>)}
+          </ul>
+          <a class="btn btn--primary" href={SKOOL_URL} target="_blank" rel="noopener noreferrer">
+            Join the community
+          </a>
+        </div>
+        <div class="cta-option">
+          <h3 class="h3">The 1:1</h3>
+          <ul>
+            {consult.map((item) => <li>{item}</li>)}
+          </ul>
+          <a class="btn btn--secondary" href={STRIPE_URL} target="_blank" rel="noopener noreferrer">
+            Book a 1:1 consultation
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  /* The decision point gets its own treatment — a centered panel, distinct
+     from the left-aligned rhythm of every other section. */
+  .cta-panel {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    background: var(--c-surface-2);
+    border: var(--border-w) solid var(--c-border);
+    border-radius: var(--radius-lg);
+    padding: var(--sp-12) var(--sp-6);
+  }
+
+  /* helix-gradient bar in place of the eyebrow tick — the decision point
+     carries the brand's red-to-blue arc */
+  .cta-panel::before {
+    content: '';
+    width: var(--sp-16);
+    height: 2px;
+    background: linear-gradient(90deg, var(--c-red), var(--c-accent));
+    margin-bottom: var(--sp-6);
+  }
+
+  .cta-panel .eyebrow::after {
+    display: none; /* the tick reads lopsided on centered text */
+  }
+
+  .cta-panel .h2 {
+    max-width: none;
+  }
+
+  .cta-panel__grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--sp-4);
+    width: 100%;
+    max-width: calc(2 * var(--container-sm));
+    margin-top: var(--sp-6);
+    text-align: left;
+  }
+
+  .cta-option {
+    display: flex;
+    flex-direction: column;
+    background: var(--c-surface);
+    border: var(--border-w) solid var(--c-border);
+    border-radius: var(--radius);
+    padding: var(--sp-6);
+  }
+
+  .cta-option ul {
+    list-style: none;
+    margin: var(--sp-4) 0 var(--sp-6);
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: var(--sp-2);
+    color: var(--c-text-muted);
+    flex: 1;
+  }
+
+  .cta-option li {
+    position: relative;
+    padding-left: var(--sp-6);
+  }
+
+  .cta-option li::before {
+    content: '';
+    position: absolute;
+    left: var(--sp-1);
+    top: 0.55em;
+    width: 7px;
+    height: 7px;
+    border: var(--border-w) solid var(--c-accent-dim);
+    background: color-mix(in srgb, var(--c-accent-dim) 45%, transparent);
+  }
+
+  .cta-option .btn {
+    width: 100%;
+  }
+
+  @media (min-width: 768px) {
+    .cta-panel {
+      padding-inline: var(--sp-12);
+    }
+
+    .cta-panel__grid {
+      grid-template-columns: 1fr 1fr;
+      gap: var(--sp-6);
+    }
+  }
+</style>

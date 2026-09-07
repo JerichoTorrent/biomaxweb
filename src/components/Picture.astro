@@ -1,0 +1,56 @@
+---
+/**
+ * Renders the <picture> markup shape the image pipeline prescribes:
+ * AVIF first, WebP second, raster fallback last, explicit intrinsic
+ * dimensions on the <img> (mandatory — the main CLS defense).
+ *
+ * `name` refers to an optimized set in public/img produced by
+ * scripts/optimize-images.mjs — never point
+ * this at a raw source image.
+ */
+interface Props {
+  name: string;
+  widths: number[];
+  /** Must reflect the actual rendered layout width */
+  sizes: string;
+  /** Intrinsic pixel dimensions of the source image */
+  width: number;
+  height: number;
+  alt: string;
+  loading?: 'lazy' | 'eager';
+  fetchpriority?: 'high';
+  class?: string;
+}
+
+const {
+  name,
+  widths,
+  sizes,
+  width,
+  height,
+  alt,
+  loading = 'lazy',
+  fetchpriority,
+  class: className,
+} = Astro.props;
+
+const srcset = (ext: string) =>
+  widths.map((w) => `/img/${name}-${w}.${ext} ${w}w`).join(', ');
+const mid = widths[Math.floor(widths.length / 2)] ?? widths[0];
+const eager = loading === 'eager';
+---
+
+<picture>
+  <source type="image/avif" srcset={srcset('avif')} sizes={sizes} />
+  <source type="image/webp" srcset={srcset('webp')} sizes={sizes} />
+  <img
+    class={className}
+    src={`/img/${name}-${mid}.webp`}
+    width={width}
+    height={height}
+    alt={alt}
+    loading={eager ? undefined : 'lazy'}
+    decoding={eager ? undefined : 'async'}
+    fetchpriority={fetchpriority}
+  />
+</picture>

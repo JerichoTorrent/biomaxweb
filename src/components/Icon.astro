@@ -1,0 +1,66 @@
+---
+/**
+ * Inline SVG line-art icons — the only icon source in the project.
+ * Single stroke weight, drawn on a 24px grid, colored via currentColor so
+ * they inherit the accent from their context (brand-system: accent blue on
+ * dark, no gradients, no 3D, no stock imagery).
+ */
+interface Props {
+  name: keyof typeof PATHS;
+  size?: number;
+  label?: string;
+  class?: string;
+}
+
+const PATHS = {
+  /* transformation stages */
+  jaw: '<path d="M14.6 3.5A7.6 7.6 0 0 0 7 11c0 1.8-.7 2.9-1.8 4-.3.3-.2.9.2 1l1.6.7v2c0 .9.7 1.7 1.6 1.7H12"/><path d="M10.8 12.6c1.7 1.3 4.4 1 5.8-.7"/>',
+  posture: '<path d="M12 20V5"/><path d="M8 8.5 12 4.5l4 4"/><path d="M6.5 21h11"/>',
+  cognition: '<circle cx="12" cy="12" r="2.5"/><path d="M12 9.5V4"/><path d="M14.2 13.8 18 17.5"/><path d="M9.8 13.8 6 17.5"/><path d="M14.5 12H20"/><path d="M4 12h5.5"/>',
+  physique: '<path d="M6.5 4c0 3 .5 5 2 6.4 1 1 1.6 2.3 1.6 3.8V20"/><path d="M17.5 4c0 3-.5 5-2 6.4-1 1-1.6 2.3-1.6 3.8V20"/><path d="M9.5 8h5"/>',
+  sleep: '<path d="M20 14.5A8.5 8.5 0 0 1 9.5 4a8.5 8.5 0 1 0 10.5 10.5Z"/>',
+  /* ui */
+  play: '<path d="M8.5 5.5v13l11-6.5-11-6.5Z"/>',
+  check: '<path d="m4.5 12.5 5 5 10-11"/>',
+  'arrow-right': '<path d="M4 12h15"/><path d="m13 6 6 6-6 6"/>',
+  link: '<path d="M10 14a5 5 0 0 0 7.5.5l2-2a5 5 0 0 0-7-7l-1.2 1.1"/><path d="M14 10a5 5 0 0 0-7.5-.5l-2 2a5 5 0 0 0 7 7l1.2-1.1"/>',
+  /* community + social */
+  community: '<circle cx="9" cy="9" r="3"/><path d="M3.5 19c.7-3 2.9-4.5 5.5-4.5s4.8 1.5 5.5 4.5"/><path d="M15.5 6.5a3 3 0 0 1 0 5.4"/><path d="M17 14.7c1.9.6 3.1 2 3.5 4.3"/>',
+  discord: '<path d="M8.7 5.6c-1.7.4-3 1.1-3.8 1.6C3.6 10 3 13.1 3.2 16.2c1.5 1.2 3.2 1.9 5 2.2l.9-1.8c-.6-.2-1.2-.4-1.7-.7"/><path d="M15.3 5.6c1.7.4 3 1.1 3.8 1.6 1.3 2.8 1.9 5.9 1.7 9-1.5 1.2-3.2 1.9-5 2.2l-.9-1.8c.6-.2 1.2-.4 1.7-.7"/><path d="M8.7 5.6c2.2-.5 4.4-.5 6.6 0"/><circle cx="9.3" cy="12.2" r="1"/><circle cx="14.7" cy="12.2" r="1"/>',
+  x: '<path d="M4 4l16 16"/><path d="M20 4 4 20"/>',
+  instagram: '<rect x="3.5" y="3.5" width="17" height="17" rx="4.5"/><circle cx="12" cy="12" r="4"/><circle cx="17.2" cy="6.8" r="0.5" fill="currentColor" stroke="none"/>',
+  youtube: '<rect x="3" y="5.5" width="18" height="13" rx="3.5"/><path d="M10.5 9.5v5l4.5-2.5-4.5-2.5Z"/>',
+  tiktok: '<path d="M15 4c.3 2.5 2.1 4.4 4.5 4.7"/><path d="M15 4v11.5a4 4 0 1 1-4-4"/>',
+  protocol:
+    '<rect x="6.5" y="4.5" width="11" height="17" rx="2"/><path d="M9.5 4.5v-1a1 1 0 0 1 1-1h3a1 1 0 0 1 1 1v1"/><path d="M9.5 10.5h5"/><path d="M9.5 14h5"/><path d="M9.5 17.5h3"/>',
+  pharma:
+    '<g transform="rotate(-35 12 12)"><rect x="4.5" y="8.75" width="15" height="6.5" rx="3.25"/><path d="M12 8.75v6.5"/></g>',
+  bone: '<path d="M9.1 9.1l5.8 5.8"/><circle cx="7.4" cy="6.3" r="2.1"/><circle cx="6.3" cy="7.4" r="2.1"/><circle cx="16.6" cy="17.7" r="2.1"/><circle cx="17.7" cy="16.6" r="2.1"/>',
+  /* DNA helix — the logo's device; strokes carry the logo's red-to-blue
+     gradient (stop colors resolve from the CSS tokens at render time) */
+  helix:
+    '<defs><linearGradient id="bmx-helix" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="var(--c-red)"/><stop offset="1" stop-color="var(--c-accent)"/></linearGradient></defs><g stroke="url(#bmx-helix)"><path d="M8 2c0 5 8 7 8 10s-8 5-8 10"/><path d="M16 2c0 5-8 7-8 10s8 5 8 10"/><path d="M8.6 4.5h6.8"/><path d="M10.4 7.5h3.2"/><path d="M10.4 16.5h3.2"/><path d="M8.6 19.5h6.8"/></g>',
+} as const;
+
+const { name, size = 24, label, class: className } = Astro.props;
+
+if (!(name in PATHS)) {
+  throw new Error(`Icon.astro: unknown icon "${name}"`);
+}
+---
+
+<svg
+  class={className}
+  width={size}
+  height={size}
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="1.75"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  aria-hidden={label ? undefined : 'true'}
+  role={label ? 'img' : undefined}
+  aria-label={label}
+  set:html={PATHS[name]}
+/>

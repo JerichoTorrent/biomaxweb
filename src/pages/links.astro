@@ -1,0 +1,231 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../layouts/Base.astro';
+import Icon from '../components/Icon.astro';
+
+const all = (await getCollection('links')).sort(
+  (a, b) => a.data.order - b.data.order,
+);
+
+/* Partners sit above Social — the client's call: sales first */
+const groups = [
+  { kind: 'community', heading: 'Community' },
+  { kind: 'sponsor', heading: 'Partners' },
+  { kind: 'social', heading: 'Social' },
+  { kind: 'content', heading: 'Free resources' },
+] as const;
+
+const isExternal = (url: string) => !url.startsWith('/');
+
+/** External links get noopener noreferrer; affiliate/sponsor links
+ *  additionally get rel="sponsored" (SEO hygiene, astro-conventions). */
+const relFor = (url: string, sponsored: boolean) => {
+  if (!isExternal(url)) return undefined;
+  return sponsored ? 'noopener noreferrer sponsored' : 'noopener noreferrer';
+};
+---
+
+<Base
+  title="Links | Biomaxxer"
+  description="Every Biomaxxer link in one place: the Skool community, the free Discord, socials, free resources, and partner offers."
+>
+  <section class="section">
+    <div class="container links">
+      <p class="eyebrow">Biomaxxer</p>
+      <h1 class="h2">Every link in one place.</h1>
+
+      {
+        groups.map((g) => {
+          const items = all.filter((l) => l.data.kind === g.kind);
+          if (items.length === 0) return null;
+          return (
+            <div class="links__group">
+              <h2 class="links__heading">{g.heading}</h2>
+              <ul class="links__list">
+                {items.map((l) => (
+                  <li>
+                    <a
+                      class:list={['link-card', { 'link-card--primary': l.id === 'skool' }]}
+                      href={l.data.url}
+                      target="_blank"
+                      rel={relFor(l.data.url, l.data.sponsored)}
+                    >
+                      {
+                        l.data.image ? (
+                          <picture class="link-card__thumb">
+                            <source
+                              type="image/avif"
+                              srcset={`/img/${l.data.image}-64.avif 64w, /img/${l.data.image}-128.avif 128w`}
+                              sizes="44px"
+                            />
+                            <img
+                              src={`/img/${l.data.image}-64.webp`}
+                              srcset={`/img/${l.data.image}-64.webp 64w, /img/${l.data.image}-128.webp 128w`}
+                              sizes="44px"
+                              width="128"
+                              height="128"
+                              alt=""
+                              loading="lazy"
+                              decoding="async"
+                            />
+                          </picture>
+                        ) : (
+                          <span class="link-card__icon">
+                            <Icon name={l.data.icon as never} size={20} />
+                          </span>
+                        )
+                      }
+                      <span class="link-card__text">
+                        <span class="link-card__label">{l.data.label}</span>
+                        {l.data.note && <span class="link-card__note">{l.data.note}</span>}
+                      </span>
+                      <span class="link-card__arrow">
+                        <Icon name="arrow-right" size={18} />
+                      </span>
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          );
+        })
+      }
+    </div>
+  </section>
+</Base>
+
+<style>
+  .links {
+    max-width: calc(var(--container-sm) + 2 * var(--gutter));
+  }
+
+  .links__group {
+    margin-top: var(--sp-12);
+  }
+
+  .links__heading {
+    font-size: var(--fs-eyebrow);
+    font-weight: var(--fw-semibold);
+    letter-spacing: var(--tr-eyebrow);
+    text-transform: uppercase;
+    color: var(--c-text-muted);
+    margin-bottom: var(--sp-4);
+  }
+
+  .links__list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: var(--sp-2);
+  }
+
+  .link-card {
+    display: flex;
+    align-items: center;
+    gap: var(--sp-4);
+    padding: var(--sp-4) var(--sp-6);
+    min-height: 52px;
+    background: var(--c-surface-2);
+    border: var(--border-w) solid var(--c-border);
+    border-radius: var(--radius);
+    color: var(--c-text);
+    text-decoration: none;
+    transition: border-color var(--dur-fast) var(--ease);
+  }
+
+  .link-card:hover {
+    border-color: var(--c-accent);
+  }
+
+  .link-card:active {
+    transform: scale(0.99);
+  }
+
+  .link-card:focus-visible {
+    outline: none;
+    box-shadow: var(--shadow-focus);
+  }
+
+  /* spans, not classes on the Icon — Astro scoped styles can't reach a
+     child component's svg */
+  .link-card__icon {
+    display: inline-flex;
+    color: var(--c-text-muted);
+    flex-shrink: 0;
+    transition: color var(--dur-fast) var(--ease);
+  }
+
+  /* card art from the client's hoo.be page, sized to the icon slot */
+  .link-card__thumb {
+    flex-shrink: 0;
+    width: 44px;
+    height: 44px;
+    border-radius: var(--radius-sm);
+    overflow: hidden;
+    border: var(--border-w) solid var(--c-border);
+  }
+
+  .link-card__thumb img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .link-card:hover .link-card__icon {
+    color: var(--c-accent);
+  }
+
+  .link-card__text {
+    display: flex;
+    flex-direction: column;
+    gap: var(--sp-1);
+    min-width: 0;
+  }
+
+  .link-card__label {
+    font-weight: var(--fw-semibold);
+  }
+
+  .link-card__note {
+    font-size: var(--fs-small);
+    color: var(--c-text-muted);
+  }
+
+  .link-card__arrow {
+    display: inline-flex;
+    margin-left: auto;
+    color: var(--c-text-faint);
+    flex-shrink: 0;
+    transition:
+      color var(--dur-fast) var(--ease),
+      transform var(--dur-fast) var(--ease);
+  }
+
+  .link-card:hover .link-card__arrow {
+    color: var(--c-accent);
+    transform: translateX(2px);
+  }
+
+  /* The priority CTA reads as the page's one filled button. Text and icons
+     are near-black on the accent for AA contrast, same as .btn--primary. */
+  .link-card--primary {
+    background: var(--c-accent);
+    border-color: var(--c-accent);
+    color: var(--c-bg);
+  }
+
+  .link-card--primary:hover {
+    background: var(--c-accent-bright);
+    border-color: var(--c-accent-bright);
+  }
+
+  .link-card--primary .link-card__icon,
+  .link-card--primary .link-card__arrow,
+  .link-card--primary .link-card__note,
+  .link-card--primary:hover .link-card__arrow {
+    color: var(--c-bg);
+  }
+</style>

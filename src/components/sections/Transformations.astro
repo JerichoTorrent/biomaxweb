@@ -1,0 +1,309 @@
+---
+import BeforeAfterSlider from '../islands/BeforeAfterSlider';
+
+/**
+ * The curriculum, one protocol per stage on the graduated rail. Content
+ * mirrors the client's own Skool about page (guides on pharmacology, bone
+ * growth and aesthetics, science-based lifting and nutrition, cognitive
+ * enhancement and dopamine signaling, face and hair, weekly member-voted
+ * modules) — the site describes his published offer, it does not add
+ * medical claims. Stages with member imagery carry before/after sliders,
+ * hydrated client:visible because they sit below the fold.
+ */
+const PAIR_WIDTHS = [400, 800, 1200];
+const PAIR_SIZES = '(min-width: 768px) 560px, 100vw';
+
+/** Builds the island's image props from an optimized public/img set. */
+const imgSet = (name: string, alt: string) => ({
+  avifSrcset: PAIR_WIDTHS.map((w) => `/img/${name}-${w}.avif ${w}w`).join(', '),
+  webpSrcset: PAIR_WIDTHS.map((w) => `/img/${name}-${w}.webp ${w}w`).join(', '),
+  src: `/img/${name}-800.webp`,
+  sizes: PAIR_SIZES,
+  width: 1200,
+  height: 1600,
+  alt,
+});
+
+const imgSetFor = (p: { name: string; alt: string }, phase: 'before' | 'after') =>
+  imgSet(`${p.name}-${phase}`, `Community member ${phase} photo, ${p.alt}`);
+
+interface Pair {
+  /** optimized image-set base name in public/img */
+  name: string;
+  /** short area description used in alts and slider labels */
+  alt: string;
+}
+
+interface Stage {
+  n: string;
+  /** anchor slug + hero chip icon */
+  icon: 'pharma' | 'bone' | 'physique' | 'cognition' | 'jaw';
+  slug: string;
+  pill: string;
+  title: string;
+  sub: string;
+  points: string[];
+  pairs?: Pair[];
+}
+
+const stages: Stage[] = [
+  {
+    n: '01',
+    icon: 'pharma',
+    slug: 'pharma',
+    pill: 'Pharmacology',
+    title: 'Pharmacology, guided',
+    sub: 'In-depth, digestible guides instead of forum guesswork.',
+    points: [
+      'Goal orientation and biomarkers before any compound talk',
+      'Risk mitigation and monitoring built into every guide',
+      'A sourcing vault the community keeps current',
+    ],
+  },
+  {
+    n: '02',
+    icon: 'bone',
+    slug: 'bone',
+    pill: 'Bone development',
+    title: 'Bone growth and frame',
+    sub: 'Mechanical stimulation and growth guides for height, jaw, and facial structure.',
+    points: [
+      'Loading protocols for measurable structural change',
+      'Pharmacological interventions for bone accrual and height',
+    ],
+    pairs: [
+      { name: 'jaw', alt: 'facial structure' },
+      { name: 'frame', alt: 'frame and physique' },
+    ],
+  },
+  {
+    n: '03',
+    icon: 'physique',
+    slug: 'lift',
+    pill: 'Lifting and nutrition',
+    title: 'Science-based lifting and nutrition',
+    sub: 'Programming and food, built for the aesthetic outcome.',
+    points: [
+      'Anabolism, gut health, fat loss, body recomposition',
+      'Peer-reviewed scientific literature > broscience',
+    ],
+    pairs: [
+      { name: 'physique', alt: 'physique' },
+      { name: 'physique2', alt: 'physique, second member' },
+    ],
+  },
+  {
+    n: '04',
+    icon: 'cognition',
+    slug: 'mind',
+    pill: 'Cognition',
+    title: 'Cognitive enhancement',
+    sub: 'Not fixing deficits. Going past baseline.',
+    points: [
+      'Dopamine signaling protocols for output you can measure',
+      'Nootropic deployment built on longevity and stimulant hygiene',
+    ],
+  },
+  {
+    n: '05',
+    icon: 'jaw',
+    slug: 'face',
+    pill: 'Aesthetics',
+    title: 'Face and hair',
+    sub: 'The details that finish the look.',
+    points: [
+      'Skin, hair, and facial optimization guides',
+      'Every target addressed - no stone left unturned',
+    ],
+  },
+];
+---
+
+<section class="section" id="system" aria-labelledby="system-title">
+  <div class="container">
+    <p class="eyebrow">The curriculum</p>
+    <h2 class="h2" id="system-title">What you'll learn.</h2>
+    <p class="lede">
+      Every module is a deep-dive: the mechanism, the steps, and what to
+      measure. These are the five tracks inside.
+    </p>
+
+    <ol class="stages">
+      {
+        stages.map((s) => (
+          <li class="stage" id={`stage-${s.slug}`}>
+            <div class="stage__marker" aria-hidden="true">
+              <span class="stage__num">{s.n}</span>
+            </div>
+            <div class="stage__body">
+              <p class="stage__pill">{s.pill}</p>
+              <h3 class="h3">{s.title}</h3>
+              <p class="stage__sub">{s.sub}</p>
+              <ul class="stage__points">
+                {s.points.map((p) => (
+                  <li>{p}</li>
+                ))}
+              </ul>
+              {s.pairs && (
+                <div class:list={['stage__media', { 'stage__media--duo': s.pairs.length > 1 }]}>
+                  {s.pairs.map((p) => (
+                    <BeforeAfterSlider
+                      client:visible
+                      label={`Reveal after image: ${p.alt}`}
+                      before={imgSetFor(p, 'before')}
+                      after={imgSetFor(p, 'after')}
+                    />
+                  ))}
+                </div>
+              )}
+            </div>
+          </li>
+        ))
+      }
+    </ol>
+  </div>
+</section>
+
+<style>
+  /* The Protocol Rail — the page's signature. A graduated instrument line,
+     red at the raw end and blue at the optimized end (the logo's arc), with
+     fine tick marks. It organizes the five tracks; the hero chips index it. */
+  .stages {
+    position: relative;
+    list-style: none;
+    margin: var(--sp-12) 0 0;
+    padding: 0;
+  }
+
+  .stages::before {
+    content: '';
+    position: absolute;
+    left: 21px;
+    top: var(--sp-6);
+    bottom: var(--sp-6);
+    width: 2px;
+    background: linear-gradient(180deg, var(--c-red), var(--c-accent));
+  }
+
+  /* tick marks: short notches every 28px along the rail */
+  .stages::after {
+    content: '';
+    position: absolute;
+    left: 16px;
+    top: var(--sp-6);
+    bottom: var(--sp-6);
+    width: 12px;
+    background: repeating-linear-gradient(
+      180deg,
+      var(--c-border) 0 1px,
+      transparent 1px 28px
+    );
+  }
+
+  .stage {
+    display: grid;
+    grid-template-columns: 44px minmax(0, 1fr);
+    column-gap: var(--sp-6);
+    scroll-margin-top: var(--sp-12); /* anchored from the hero chip index */
+  }
+
+  .stage:not(:last-child) .stage__body {
+    padding-bottom: var(--sp-12);
+  }
+
+  .stage__marker {
+    position: relative; /* plates sit above the rail pseudo-elements */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  /* etched instrument plate, not a bubble */
+  .stage__num {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    border: var(--border-w) solid var(--c-border);
+    border-radius: var(--radius-sm);
+    background: var(--c-surface-2);
+    color: var(--c-text);
+    font-size: var(--fs-small);
+    font-weight: var(--fw-semibold);
+    font-variant-numeric: tabular-nums;
+    letter-spacing: 0.05em;
+  }
+
+  .stage__pill {
+    display: inline-flex;
+    align-self: flex-start;
+    width: fit-content;
+    padding: var(--sp-1) var(--sp-3);
+    border: var(--border-w) solid var(--c-border);
+    border-radius: var(--radius-sm);
+    background: var(--c-surface-2);
+    color: var(--c-text-muted);
+    font-size: var(--fs-eyebrow);
+    font-weight: var(--fw-semibold);
+    letter-spacing: var(--tr-eyebrow);
+    text-transform: uppercase;
+    margin-bottom: var(--sp-3);
+  }
+
+  .stage__body .h3 {
+    min-height: 0;
+  }
+
+  .stage__sub {
+    margin-top: var(--sp-2);
+    color: var(--c-text-muted);
+    max-width: var(--measure);
+  }
+
+  .stage__points {
+    list-style: none;
+    margin: var(--sp-4) 0 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: var(--sp-2);
+    color: var(--c-text-muted);
+    max-width: var(--measure);
+  }
+
+  .stage__points li {
+    position: relative;
+    padding-left: var(--sp-6);
+  }
+
+  /* square tick bullets, matching the rail's instrument language */
+  .stage__points li::before {
+    content: '';
+    position: absolute;
+    left: var(--sp-1);
+    top: 0.55em;
+    width: 7px;
+    height: 7px;
+    border: var(--border-w) solid var(--c-accent-dim);
+    background: color-mix(in srgb, var(--c-accent-dim) 45%, transparent);
+  }
+
+  .stage__media {
+    margin-top: var(--sp-6);
+    max-width: var(--container-sm);
+  }
+
+  /* two members on one stage: side by side at desktop, stacked on mobile */
+  .stage__media--duo {
+    max-width: none;
+    display: grid;
+    gap: var(--sp-4);
+  }
+
+  @media (min-width: 768px) {
+    .stage__media--duo {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+</style>

@@ -1,0 +1,129 @@
+---
+import { getCollection } from 'astro:content';
+import '../styles/global.css';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import {
+  SITE_NAME,
+  SITE_ORIGIN,
+  SKOOL_URL,
+  DEFAULT_OG_IMAGE,
+} from '../config';
+
+/**
+ * Base.astro owns the entire <head>. Pages pass title/description/ogImage as
+ * props and never write their own meta tags — that is how duplicate titles
+ * and missing canonicals happen.
+ */
+interface Props {
+  title: string;
+  description: string;
+  /** Site-root-relative path to a 1200×630 image */
+  ogImage?: string;
+  /** LCP image to preload with fetchpriority=high (homepage hero poster).
+   *  imagesrcset/imagesizes make the preload responsive and must exactly
+   *  match the rendered picture so the fetched candidate is reused. */
+  preloadImage?: {
+    href: string;
+    type: string;
+    imagesrcset?: string;
+    imagesizes?: string;
+  };
+  /** Status pages (404) stay out of the index */
+  noindex?: boolean;
+}
+
+const {
+  title,
+  description,
+  ogImage = DEFAULT_OG_IMAGE,
+  preloadImage,
+  noindex = false,
+} = Astro.props;
+
+const canonical = `${SITE_ORIGIN}${Astro.url.pathname}`;
+const ogImageAbs = `${SITE_ORIGIN}${ogImage}`;
+
+/* sameAs derives from the links collection so real social profiles flow into
+   the schema automatically; placeholder ({{...}}) URLs are excluded. */
+const socialProfiles = (await getCollection('links'))
+  .filter((l) => l.data.kind === 'social' && l.data.url.startsWith('http'))
+  .sort((a, b) => a.data.order - b.data.order)
+  .map((l) => l.data.url);
+
+const organizationSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Organization',
+  name: SITE_NAME,
+  url: `${SITE_ORIGIN}/`,
+  logo: `${SITE_ORIGIN}/apple-touch-icon.png`,
+  sameAs: [SKOOL_URL, ...socialProfiles],
+};
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    {noindex && <meta name="robots" content="noindex" />}
+    <meta name="theme-color" content="#0a080e" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="sitemap" href="/sitemap-index.xml" />
+    {
+      /* LCP image first — it competes with the font for early bandwidth */
+      preloadImage && (
+        <link
+          rel="preload"
+          as="image"
+          href={preloadImage.href}
+          imagesrcset={preloadImage.imagesrcset}
+          imagesizes={preloadImage.imagesizes}
+          type={preloadImage.type}
+          fetchpriority="high"
+        />
+      )
+    }
+    {
+      /* Only the above-fold display weight is preloaded (performance budget).
+         Inter arrives via font-display:swap behind its metric-matched
+         fallback, keeping the LCP poster's bandwidth clear. */
+    }
+    <link
+      rel="preload"
+      href="/fonts/archivo-latin-800-exp.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content={SITE_NAME} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={ogImageAbs} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content={`${SITE_NAME} wordmark on a dark background`} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImageAbs} />
+    <meta name="twitter:image:alt" content={`${SITE_NAME} wordmark on a dark background`} />
+    <script type="application/ld+json" is:inline set:html={JSON.stringify(organizationSchema)} />
+    <slot name="head" />
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Skip to content</a>
+    <Header />
+    <main id="main">
+      <slot />
+    </main>
+    <Footer />
+  </body>
+</html>

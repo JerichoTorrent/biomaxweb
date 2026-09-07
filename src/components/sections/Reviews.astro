@@ -1,0 +1,103 @@
+---
+import { getCollection } from 'astro:content';
+
+const testimonials = await getCollection('testimonials');
+/* the most substantive quote leads as the featured card */
+const [featured, ...rest] = testimonials;
+---
+
+<section class="section" id="reviews" aria-labelledby="reviews-title">
+  <div class="container">
+    <p class="eyebrow">Member results</p>
+    <h2 class="h2" id="reviews-title">What members report.</h2>
+    <p class="lede">Pulled from the paid Skool community.</p>
+
+    <div class="reviews__grid">
+      {featured && (
+        <figure class="card testimonial testimonial--featured">
+          <div class="stars">
+            <span class="visually-hidden">{`Rated ${featured.data.rating} out of 5 stars`}</span>
+            <span aria-hidden="true">{'★'.repeat(featured.data.rating)}</span>
+          </div>
+          <blockquote>{featured.data.quote}</blockquote>
+          <figcaption>
+            <span class="testimonial__name">{featured.data.name}</span>
+            <span class="testimonial__meta">{featured.data.source} member</span>
+          </figcaption>
+        </figure>
+      )}
+      <div class="reviews__side">
+        {
+          rest.map((t) => (
+            <figure class="card testimonial">
+              <div class="stars">
+                <span class="visually-hidden">{`Rated ${t.data.rating} out of 5 stars`}</span>
+                <span aria-hidden="true">{'★'.repeat(t.data.rating)}</span>
+              </div>
+              <blockquote>{t.data.quote}</blockquote>
+              <figcaption>
+                <span class="testimonial__name">{t.data.name}</span>
+                <span class="testimonial__meta">{t.data.source} member</span>
+              </figcaption>
+            </figure>
+          ))
+        }
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  /* Static, no carousel: the substantive quote leads at reading size, the
+     shorter ones stack beside it. One column at 375px. */
+  .reviews__grid {
+    margin-top: var(--sp-12);
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--sp-4);
+  }
+
+  .reviews__side {
+    display: grid;
+    gap: var(--sp-4);
+  }
+
+  @media (min-width: 768px) {
+    .reviews__grid {
+      grid-template-columns: 3fr 2fr;
+      gap: var(--sp-6);
+      align-items: stretch;
+    }
+
+    .reviews__side {
+      gap: var(--sp-6);
+    }
+  }
+
+  .testimonial--featured {
+    display: flex;
+    flex-direction: column;
+    padding: var(--sp-8);
+  }
+
+  .testimonial--featured blockquote {
+    flex: 1;
+    font-size: var(--fs-h3);
+    letter-spacing: var(--tr-h3);
+    line-height: 1.45;
+  }
+
+  /* Safety net only: the schema's 280-char cap renders at most ~8 lines at
+     the narrowest card, so valid quotes are never actually truncated. */
+  .testimonial blockquote {
+    display: -webkit-box;
+    -webkit-line-clamp: 8;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .testimonial figcaption {
+    border-top: var(--border-w) solid var(--c-border);
+    padding-top: var(--sp-3);
+  }
+</style>

@@ -1,0 +1,233 @@
+---
+import Icon from '../Icon.astro';
+import { SITE_ORIGIN, STRIPE_URL, CONSULT_PRICE_USD, SITE_NAME } from '../../config';
+
+const deliverables = [
+  'A written 90-day protocol for pharmacology and aesthetics',
+  'A bloodwork checklist to take to your clinic',
+  'A supplement & pharmacological audit: what stays, what goes',
+  'One follow-up review of your first month of logs',
+];
+
+const serviceSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Service',
+  name: 'One-on-one optimization consultation',
+  serviceType: 'Fitness and lifestyle coaching consultation',
+  description:
+    'A sixty-minute one-on-one call resulting in a written 90-day protocol covering pharmacology, nutrition, skin care, and more.',
+  provider: {
+    '@type': 'Organization',
+    name: SITE_NAME,
+    url: `${SITE_ORIGIN}/`,
+  },
+  url: `${SITE_ORIGIN}/#consultation`,
+  offers: {
+    '@type': 'Offer',
+    price: String(CONSULT_PRICE_USD),
+    priceCurrency: 'USD',
+    url: STRIPE_URL,
+    availability: 'https://schema.org/InStock',
+  },
+};
+---
+
+<section class="section section--alt" id="consultation" aria-labelledby="consultation-title">
+  <div class="container">
+    {/* Client-directed layout: the Protocol Design visual left, title and
+        paragraph right, the price and call to action banded below both. */}
+    <div class="consult__top">
+      <div class="consult__copy">
+        <p class="eyebrow">Consultation</p>
+        <h2 class="h2" id="consultation-title">
+          One call. A protocol built for your physiology, not a template.
+        </h2>
+        <p class="lede">
+          Sixty minutes, one on one. Bring your training history and any labs
+          you have; leave with the next 90 days written down. If you choose to
+          join the 1:1 program after, this consultation is credited.
+        </p>
+      </div>
+
+      {/* The client's "Protocol Design" graphic, rebuilt natively so its
+          elements sit in the section instead of arriving as a pasted image:
+          molecule wireframe, glowing title, brand helix. Decorative — the
+          real heading for this section is the h2 beside it. */}
+      <div class="consult__protocol" aria-hidden="true">
+        <svg
+          class="consult__molecule"
+          viewBox="0 0 300 200"
+          preserveAspectRatio="xMidYMid meet"
+          fill="none"
+          stroke-width="1.6"
+        >
+          <path d="M96 46l38-20 38 20v44l-38 20-38-20z" />
+          <path d="M172 90l40-16 36 24-4 44-40 16-36-24z" />
+          <path d="M134 90v22M212 74l14-30M226 44l30-18" />
+          <text x="216" y="80">N</text>
+          <text x="242" y="146">N</text>
+        </svg>
+        <p class="consult__protocol-title">Protocol<br />Design</p>
+        <span class="consult__protocol-helix">
+          <Icon name="helix" size={40} />
+        </span>
+      </div>
+    </div>
+
+    <div class="card consult__panel">
+      <div class="consult__book">
+        <p class="consult__price">${CONSULT_PRICE_USD}</p>
+        <a class="btn btn--secondary" href={STRIPE_URL} target="_blank" rel="noopener noreferrer">
+          Book a 1:1 consultation
+        </a>
+      </div>
+      <div>
+        <h3 class="h3">You leave with</h3>
+        <ul class="consult__list">
+          {
+            deliverables.map((item) => (
+              <li>
+                <Icon name="check" size={20} class="consult__check" />
+                <span>{item}</span>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script type="application/ld+json" is:inline set:html={JSON.stringify(serviceSchema)} />
+
+<style>
+  .consult__top {
+    display: grid;
+    gap: var(--sp-8);
+  }
+
+  @media (min-width: 768px) {
+    .consult__top {
+      grid-template-columns: minmax(0, 5fr) minmax(0, 6fr);
+      gap: var(--sp-12);
+      align-items: center;
+    }
+
+    /* copy reads first in the DOM; the visual takes the left column */
+    .consult__protocol {
+      grid-column: 1;
+      grid-row: 1;
+    }
+
+    .consult__copy {
+      grid-column: 2;
+      grid-row: 1;
+    }
+  }
+
+  /* the price and call to action band under both columns */
+  .consult__panel {
+    margin-top: var(--sp-12);
+    padding: var(--sp-8);
+    display: grid;
+    gap: var(--sp-8);
+  }
+
+  @media (min-width: 768px) {
+    .consult__panel {
+      grid-template-columns: minmax(0, 4fr) minmax(0, 7fr);
+      gap: var(--sp-12);
+      align-items: start;
+    }
+  }
+
+  .consult__book {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--sp-4);
+  }
+
+  /* the Protocol Design composition: wireframe behind, title in front */
+  .consult__protocol {
+    position: relative;
+    display: grid;
+    place-items: center;
+    min-height: 230px;
+    padding: var(--sp-8) var(--sp-6);
+    overflow: hidden;
+  }
+
+  .consult__molecule {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    stroke: var(--c-accent);
+    opacity: 0.5;
+  }
+
+  .consult__molecule text {
+    fill: var(--c-accent);
+    stroke: none;
+    font-family: var(--font-sans);
+    font-size: 15px;
+  }
+
+  .consult__protocol-title {
+    position: relative;
+    font-family: var(--font-display);
+    font-weight: var(--fw-black);
+    font-size: clamp(1.9rem, 1.4rem + 1.6vw, 2.6rem);
+    line-height: 1.12;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    text-align: center;
+    color: var(--c-text);
+    text-shadow: 0 0 26px rgba(244, 242, 247, 0.4);
+  }
+
+  .consult__protocol-helix {
+    position: absolute;
+    right: var(--sp-4);
+    bottom: var(--sp-3);
+    opacity: 0.9;
+  }
+
+  /* the figure carries itself in the display face — no accent needed */
+  .consult__price {
+    font-family: var(--font-display);
+    font-size: var(--fs-h2);
+    font-weight: var(--fw-black);
+    letter-spacing: var(--tr-heading);
+    font-variant-numeric: tabular-nums;
+    color: var(--c-text);
+  }
+
+  .consult__panel .h3 {
+    margin-bottom: var(--sp-4);
+  }
+
+  .consult__list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: var(--sp-3);
+    color: var(--c-text-muted);
+  }
+
+  .consult__list li {
+    display: flex;
+    gap: var(--sp-3);
+    align-items: flex-start;
+  }
+
+  /* Astro scoped styles cannot reach the Icon component's own svg */
+  .consult__list :global(svg) {
+    color: var(--c-text-muted);
+    flex-shrink: 0;
+    margin-top: var(--sp-1);
+  }
+</style>

@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <defs>
+    <linearGradient id="fav-helix" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#d94358"/>
+      <stop offset="1" stop-color="#2f7fff"/>
+    </linearGradient>
+  </defs>
+  <circle cx="32" cy="32" r="31" fill="#123a78"/>
+  <circle cx="32" cy="32" r="30" fill="none" stroke="#2f7fff" stroke-opacity="0.5" stroke-width="2"/>
+  <g transform="translate(10 10) scale(1.833)" fill="none" stroke="url(#fav-helix)"
+     stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M8 2c0 5 8 7 8 10s-8 5-8 10"/>
+    <path d="M16 2c0 5-8 7-8 10s8 5 8 10"/>
+    <path d="M8.6 4.5h6.8"/>
+    <path d="M10.4 7.5h3.2"/>
+    <path d="M10.4 16.5h3.2"/>
+    <path d="M8.6 19.5h6.8"/>
+  </g>
+</svg>

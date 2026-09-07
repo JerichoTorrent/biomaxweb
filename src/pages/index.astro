@@ -1,0 +1,23 @@
+---
+import Base from '../layouts/Base.astro';
+import Hero from '../components/sections/Hero.astro';
+import Consultation from '../components/sections/Consultation.astro';
+import Transformations from '../components/sections/Transformations.astro';
+import DualCta from '../components/sections/DualCta.astro';
+import Reviews from '../components/sections/Reviews.astro';
+import Faq from '../components/sections/Faq.astro';
+import { DEFAULT_DESCRIPTION, HERO_POSTER } from '../config';
+---
+
+<Base
+  title="Biomaxxer | Systematic self-optimization for men"
+  description={DEFAULT_DESCRIPTION}
+  preloadImage={HERO_POSTER}
+>
+  <Hero />
+  <Consultation />
+  <Transformations />
+  <DualCta />
+  <Reviews />
+  <Faq />
+</Base>

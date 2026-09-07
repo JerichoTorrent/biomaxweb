@@ -1,0 +1,72 @@
+[
+  {
+    "id": "what-is-biomaxxing",
+    "order": 1,
+    "question": "What is biomaxxing?",
+    "answer": "Biomaxxing is a full scale enhancement journey. Harboring on Julian Huxley's Transhumanism, biomaxxing is taking enhancement to its logical conclusion. We address every target: face, physique, bone structure, cognition, frame, height, posture, presentation, socialization, and much more.",
+    "placeholder": true
+  },
+  {
+    "id": "whats-inside",
+    "order": 2,
+    "question": "What do I get inside the Skool community?",
+    "answer": "The classroom with countless, scientifically backed write-ups on enhancement, group calls, stack reviews, the sourcing guide for every niche compound, and direct help from Biomaxxer and senior members.",
+    "placeholder": true
+  },
+  {
+    "id": "vs-free-content",
+    "order": 3,
+    "question": "Why join when free content exists?",
+    "answer": "Free content gives you fragments from people who are usually selling something else. The community gives you the sequence, the sources, and people checking your logs every week. You are paying to stop wasting months on the wrong order of operations.",
+    "placeholder": true
+  },
+  {
+    "id": "consultation",
+    "order": 4,
+    "question": "What happens on the $120 consultation call?",
+    "answer": "A one-hour call where we go through your goals, training history, biomarkers, previously ran protocols, diet, and deficits. You leave with a written protocol for the next 90 days and a list of what to measure before we would ever change it.",
+    "placeholder": true
+  },
+  {
+    "id": "bloodwork",
+    "order": 5,
+    "question": "Do I need bloodwork before the call?",
+    "answer": "No, but it helps. If you have recent labs, bring them. If not, part of the call is a checklist of what to ask your doctor for, so the next review works from data instead of feel. The more data you bring, the better.",
+    "placeholder": true
+  },
+  {
+    "id": "results-timeline",
+    "order": 6,
+    "question": "How fast will I see results?",
+    "answer": "Depends on the area and your starting point. Sleep, body composition and posture changes show up in weeks; drastic frame and facial-structure changes are measured over months. The mindset can change instantly. It simply depends on which target we're discussing.",
+    "placeholder": true
+  },
+  {
+    "id": "beginners",
+    "order": 7,
+    "question": "I am a complete beginner. Is this for me?",
+    "answer": "Yes. The modules start from zero and the deeper the hole you start from, the more you will benefit. My protocols work no matter where you're at currently.",
+    "placeholder": true
+  },
+  {
+    "id": "medical-advice",
+    "order": 8,
+    "question": "Is this medical advice?",
+    "answer": "No. Everything in the community and on the calls is educational. For anything involving medication, hormones, or a health condition, work with a licensed physician. We help you show up to that conversation with better data and better questions.",
+    "placeholder": true
+  },
+  {
+    "id": "cancel",
+    "order": 9,
+    "question": "Can I cancel? Are there refunds?",
+    "answer": "You can cancel the subscription any time from your Skool account settings, which stops future billing; you keep access until the end of the period. All purchases are final, so there are no refunds. The same goes with a consultation. If you schedule a call and don't show up, we can reschedule. If you don't come prepared and don't even know what your goals are, I'll try to help you nail them down.",
+    "placeholder": true
+  },
+  {
+    "id": "discord-vs-skool",
+    "order": 10,
+    "question": "Is the free Discord the same as the paid community?",
+    "answer": "No. The Discord is the open room: general chat, occasional free write-ups, and a place to lurk before committing. The protocols, modules, and private community live in the paid Skool community.",
+    "placeholder": true
+  }
+]

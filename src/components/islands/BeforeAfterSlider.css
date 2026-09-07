@@ -1,0 +1,101 @@
+/* Styles for the before/after slider island. Token references only. */
+
+.ba {
+  position: relative;
+  overflow: hidden;
+  border-radius: var(--radius);
+  border: var(--border-w) solid var(--c-border);
+  background: var(--c-surface-2);
+  /* the frame is the interaction surface: horizontal drags reveal, vertical
+     swipes keep scrolling the page */
+  cursor: ew-resize;
+  touch-action: pan-y;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.ba__img,
+.ba__img img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* The after image sits on top, clipped from the left by the slider value. */
+.ba__img--after {
+  clip-path: inset(0 0 0 var(--pos));
+}
+
+.ba__handle {
+  position: absolute;
+  inset-block: 0;
+  left: var(--pos);
+  width: 2px;
+  margin-left: -1px;
+  background: var(--c-accent);
+  pointer-events: none;
+}
+
+.ba__grip {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: grid;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: var(--c-accent);
+  color: var(--c-bg); /* the helix glyph inherits this */
+  box-shadow: var(--shadow-card);
+}
+
+.ba__tag {
+  position: absolute;
+  bottom: var(--sp-3);
+  padding: var(--sp-1) var(--sp-3);
+  border-radius: var(--radius-sm);
+  background: var(--c-bg);
+  border: var(--border-w) solid var(--c-border);
+  color: var(--c-text-muted);
+  font-size: var(--fs-eyebrow);
+  font-weight: var(--fw-semibold);
+  letter-spacing: var(--tr-eyebrow);
+  text-transform: uppercase;
+  pointer-events: none;
+}
+
+/* red to blue, the same arc as the logo helix: before is the raw state,
+   after is the optimized one */
+.ba__tag--before {
+  left: var(--sp-3);
+  color: var(--c-red);
+}
+
+.ba__tag--after {
+  right: var(--sp-3);
+  color: var(--c-accent);
+}
+
+/* The range input is the keyboard and screen-reader surface only — pointers
+   go to the frame (mobile range inputs demand a precise grab of the thumb). */
+.ba__range {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  opacity: 0;
+  pointer-events: none;
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+/* Focus ring drawn on the frame so keyboard users see the widget focused. */
+.ba:has(.ba__range:focus-visible) {
+  outline: 2px solid var(--c-accent);
+  outline-offset: 2px;
+}

@@ -1,0 +1,52 @@
+---
+import { getCollection } from 'astro:content';
+
+const faqs = (await getCollection('faq')).sort(
+  (a, b) => a.data.order - b.data.order,
+);
+
+/* FAQPage schema is generated from the same collection that renders the
+   accordion, so the two cannot drift apart. */
+const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: faqs.map((f) => ({
+    '@type': 'Question',
+    name: f.data.question,
+    acceptedAnswer: {
+      '@type': 'Answer',
+      text: f.data.answer,
+    },
+  })),
+};
+---
+
+<section class="section section--alt" id="faq" aria-labelledby="faq-title">
+  <div class="container">
+    <p class="eyebrow">FAQ</p>
+    <h2 class="h2" id="faq-title">Asked every week.</h2>
+
+    <div class="faq">
+      {
+        faqs.map((f) => (
+          <details class="faq__item" name="faq">
+            <summary>{f.data.question}</summary>
+            <div class="faq__body">
+              <p>{f.data.answer}</p>
+            </div>
+          </details>
+        ))
+      }
+    </div>
+  </div>
+</section>
+
+<script type="application/ld+json" is:inline set:html={JSON.stringify(faqSchema)} />
+
+<style>
+  .faq {
+    margin-top: var(--sp-8);
+    max-width: var(--measure);
+    border-top: var(--border-w) solid var(--c-border);
+  }
+</style>

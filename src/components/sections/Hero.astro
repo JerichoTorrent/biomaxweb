@@ -1,0 +1,269 @@
+---
+import Icon from '../Icon.astro';
+import { SKOOL_URL, HERO_POSTER } from '../../config';
+
+/**
+ * Self-hosted video facade: poster shown by default, preload="none", native
+ * controls make it click-to-play with zero JavaScript. Never replace this
+ * with a Skool/YouTube iframe in the initial HTML — a third-party embed
+ * costs 15 to 25 Lighthouse points (see the performance budget in the README).
+ *
+ * The page's one structural break lives here: at desktop the media column
+ * bleeds to the right viewport edge while the text keeps the container
+ * grid (padding computed from %, never 100vw, so no scrollbar overflow).
+ *
+ * The page's one motion moment also lives here: a five-step text cascade
+ * on load, CSS-only, gated behind prefers-reduced-motion. The media block
+ * is deliberately excluded so the LCP poster paints immediately.
+ *
+ * DOM order matches the visual order at every width.
+ */
+
+const levers = [
+  { n: '01', icon: 'pharma', slug: 'pharma', label: 'Pharmacology' },
+  { n: '02', icon: 'bone', slug: 'bone', label: 'Bone growth and frame' },
+  { n: '03', icon: 'physique', slug: 'lift', label: 'Lifting and nutrition' },
+  { n: '04', icon: 'cognition', slug: 'mind', label: 'Cognitive enhancement' },
+  { n: '05', icon: 'jaw', slug: 'face', label: 'Face and hair' },
+] as const;
+---
+
+<section class="section hero" aria-labelledby="hero-title">
+  <div class="hero__grid">
+    <p class="eyebrow hero__eyebrow">The biomaxxing community</p>
+    <h1 class="display hero__title" id="hero-title">
+      Be a <em class="hero__em">guinea pig</em> not a sheep.
+    </h1>
+    <p class="lede hero__lede">
+      Pharmacology, bone growth, nutrition, and cognition, run as one system:
+      real protocols, full-scale enhancement, no mainstream cope.
+    </p>
+
+    <div class="hero__media">
+      <video
+        class="hero__video"
+        controls
+        preload="none"
+        playsinline
+        width="1280"
+        height="720"
+        poster={HERO_POSTER.href}
+        aria-label="Watch: what the Biomaxxing community is"
+      >
+        <source src="/video/hero-ad.mp4" type="video/mp4" />
+        <track kind="captions" src="/video/hero-ad.en.vtt" srclang="en" label="English" />
+        Your browser does not support embedded video.
+        <a href={SKOOL_URL} target="_blank" rel="noopener noreferrer">Visit the community instead.</a>
+      </video>
+
+      <nav class="hero__levers" aria-label="The five levers">
+        {
+          levers.map((l) => (
+            <a href={`#stage-${l.slug}`}>
+              <Icon name={l.icon} size={17} />
+              <span class="hero__lever-n" aria-hidden="true">{l.n}</span>
+              <span class="visually-hidden">{l.label}</span>
+            </a>
+          ))
+        }
+      </nav>
+    </div>
+
+    <div class="cta-row hero__cta">
+      <a class="btn btn--primary" href={SKOOL_URL} target="_blank" rel="noopener noreferrer">
+        Join the community
+      </a>
+    </div>
+  </div>
+</section>
+
+<style>
+  .hero {
+    overflow: hidden;
+    /* dual wash echoing the logo helix: blue behind the media, a faint red
+       undertone rising from the opposite corner; tokens only */
+    background:
+      radial-gradient(
+          52rem 30rem at 78% 22%,
+          color-mix(in srgb, var(--c-accent-dim) 32%, transparent),
+          transparent 68%
+        ),
+      radial-gradient(
+          44rem 28rem at 10% 92%,
+          color-mix(in srgb, var(--c-red-dim) 36%, transparent),
+          transparent 72%
+        ),
+      var(--c-bg);
+  }
+
+  /* Mobile: contained single column in natural DOM order. */
+  .hero__grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 0;
+    padding-inline: var(--gutter);
+  }
+
+  .hero__em {
+    font-style: normal;
+    color: var(--c-accent);
+  }
+
+  .hero__lede {
+    margin-top: var(--sp-4);
+  }
+
+  .hero__media {
+    margin-top: var(--sp-8);
+  }
+
+  .hero__video {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    border: var(--border-w) solid var(--c-border);
+    border-radius: var(--radius-lg);
+    background: var(--c-surface);
+  }
+
+  /* Index of the five levers — anchors into the protocol rail below. Quiet
+     at rest; blue is earned on hover. */
+  .hero__levers {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--sp-2);
+    margin-top: var(--sp-4);
+  }
+
+  .hero__levers a {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--sp-2);
+    padding: var(--sp-2) var(--sp-3);
+    border: var(--border-w) solid var(--c-border);
+    border-radius: var(--radius-sm);
+    color: var(--c-text-muted);
+    text-decoration: none;
+    transition:
+      border-color var(--dur-fast) var(--ease),
+      color var(--dur-fast) var(--ease);
+  }
+
+  .hero__lever-n {
+    font-size: var(--fs-eyebrow);
+    font-weight: var(--fw-semibold);
+    font-variant-numeric: tabular-nums;
+  }
+
+  .hero__levers a:hover {
+    border-color: var(--c-accent);
+    color: var(--c-accent);
+  }
+
+  /* Desktop: text holds the container grid, media bleeds to the right
+     viewport edge. Percentages (not vw) so the scrollbar never causes
+     horizontal overflow. */
+  @media (min-width: 768px) {
+    .hero__grid {
+      grid-template-columns: minmax(0, 6fr) minmax(0, 5fr);
+      grid-template-rows: auto auto auto 1fr;
+      grid-template-areas:
+        'eyebrow media'
+        'title media'
+        'lede media'
+        'cta media';
+      column-gap: var(--sp-12);
+      align-items: start;
+      padding-left: max(var(--gutter), calc((100% - var(--container)) / 2 + var(--gutter)));
+      padding-right: 0;
+    }
+
+    .hero__eyebrow {
+      grid-area: eyebrow;
+    }
+
+    .hero__title {
+      grid-area: title;
+    }
+
+    .hero__lede {
+      grid-area: lede;
+    }
+
+    .hero__media {
+      grid-area: media;
+      align-self: center;
+      margin-top: 0;
+    }
+
+    .hero__video {
+      border-radius: var(--radius-lg) 0 0 var(--radius-lg);
+      border-right: none;
+    }
+
+    .hero__cta {
+      grid-area: cta;
+      align-self: start;
+    }
+
+    .hero__levers {
+      padding-right: var(--gutter);
+    }
+  }
+
+  /* Ultra-wide: the right-edge bleed would overshoot and beach the video at
+     the viewport edge. Instead the hero re-contains symmetrically on its own
+     wider stage, with the media column taking the larger share, so the
+     video is centered AND substantial. The bleed stays for 768 to ~1700px. */
+  @media (min-width: 1720px) {
+    .hero__grid {
+      padding-left: max(var(--gutter), calc((100% - var(--container-lg)) / 2 + var(--gutter)));
+      padding-right: max(var(--gutter), calc((100% - var(--container-lg)) / 2 + var(--gutter)));
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1.15fr);
+    }
+
+    .hero__video {
+      border-radius: var(--radius-lg);
+      border-right: var(--border-w) solid var(--c-border);
+    }
+
+    .hero__levers {
+      padding-right: 0;
+    }
+  }
+
+  /* The one orchestrated motion moment: text cascades in on load. The media
+     block is excluded so the LCP poster is never delayed. */
+  @media (prefers-reduced-motion: no-preference) {
+    .hero__eyebrow,
+    .hero__title,
+    .hero__lede,
+    .hero__cta,
+    .hero__levers {
+      animation: hero-in 420ms var(--ease) both;
+    }
+
+    .hero__title {
+      animation-delay: 70ms;
+    }
+    .hero__lede {
+      animation-delay: 140ms;
+    }
+    .hero__levers {
+      animation-delay: 210ms;
+    }
+    .hero__cta {
+      animation-delay: 280ms;
+    }
+  }
+
+  @keyframes hero-in {
+    from {
+      opacity: 0;
+      transform: translateY(14px);
+    }
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+</style>

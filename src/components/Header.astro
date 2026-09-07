@@ -1,0 +1,101 @@
+---
+const path = Astro.url.pathname;
+const isActive = (href: string) => path === href || path === `${href}/`;
+---
+
+<header class="site-header">
+  <div class="container site-header__inner">
+    <a class="site-header__wordmark" href="/">
+      {/* the brand badge: navy circle, red-to-blue helix (the client's logo device) */}
+      <svg class="site-header__mark" viewBox="0 0 64 64" width="24" height="24" aria-hidden="true">
+        <defs>
+          <linearGradient id="hdr-helix" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stop-color="var(--c-red)"></stop>
+            <stop offset="1" stop-color="var(--c-accent)"></stop>
+          </linearGradient>
+        </defs>
+        <circle cx="32" cy="32" r="30" fill="var(--c-accent-dim)"></circle>
+        <circle cx="32" cy="32" r="30" fill="none" stroke="var(--c-accent)" stroke-opacity="0.45" stroke-width="2"></circle>
+        <g
+          transform="translate(10 10) scale(1.833)"
+          fill="none"
+          stroke="url(#hdr-helix)"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        >
+          <path d="M8 2c0 5 8 7 8 10s-8 5-8 10"></path>
+          <path d="M16 2c0 5-8 7-8 10s8 5 8 10"></path>
+          <path d="M8.6 4.5h6.8"></path>
+          <path d="M10.4 7.5h3.2"></path>
+          <path d="M10.4 16.5h3.2"></path>
+          <path d="M8.6 19.5h6.8"></path>
+        </g>
+      </svg>
+      Biomaxxer
+    </a>
+    <nav aria-label="Site">
+      <ul>
+        <li>
+          <a href="/links" aria-current={isActive('/links') ? 'page' : undefined}>Links</a>
+        </li>
+        <li>
+          <a href="/discord" aria-current={isActive('/discord') ? 'page' : undefined}>Discord</a>
+        </li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<style>
+  .site-header {
+    background: var(--c-bg);
+    border-bottom: var(--border-w) solid var(--c-border);
+  }
+
+  .site-header__inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    min-height: 64px;
+  }
+
+  .site-header__wordmark {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--sp-2);
+    font-size: var(--fs-body);
+    font-weight: var(--fw-black);
+    letter-spacing: var(--tr-eyebrow);
+    text-transform: uppercase;
+    color: var(--c-text);
+    text-decoration: none;
+  }
+
+  .site-header__mark {
+    flex-shrink: 0;
+  }
+
+  nav ul {
+    display: flex;
+    gap: var(--sp-6);
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  nav a {
+    display: inline-block;
+    padding-block: var(--sp-3); /* comfortable touch target inside the 64px bar */
+    color: var(--c-text-muted);
+    text-decoration: none;
+    font-size: var(--fs-small);
+    font-weight: var(--fw-medium);
+    transition: color var(--dur) var(--ease);
+  }
+
+  nav a:hover,
+  nav a[aria-current='page'] {
+    color: var(--c-text);
+  }
+</style>
