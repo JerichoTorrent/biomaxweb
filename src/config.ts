@@ -29,10 +29,10 @@ export const CONSULT_PRICE_USD = 120;
  * this wording before launch; tracked as a blocking item in ASSETS-NEEDED.md.
  */
 export const DISCLAIMER =
-  'The content on this site and inside the Biomaxxer community is for educational and informational purposes only. It is not medical advice, and it is not a substitute for professional medical advice, diagnosis, or treatment. Biomaxxer is not a licensed physician, and no doctor-patient relationship is created by using this site, joining the community, or booking a consultation. Always consult a qualified healthcare provider before changing your training, diet, supplementation, or medication. Transformations shown are individual member results, not a guarantee of your outcome.';
+  'The content on this site and inside the Biomaxxing community is for educational and informational purposes only. It is not medical advice, and it is not a substitute for professional medical advice, diagnosis, or treatment. Biomaxxer is not a licensed physician, and no doctor-patient relationship is created by using this site, joining the community, or booking a consultation. Always consult a qualified healthcare provider before changing your training, diet, supplementation, or medication. Transformations shown are individual member results, not a guarantee of your outcome.';
 
 export const DEFAULT_DESCRIPTION =
-  'Biomaxxer is a community for men who treat their body like an engineering project: training, sleep, facial structure, and cognition, built on protocols instead of guesswork.';
+  'Biomaxxing is a community for individuals who treat their body like an engineering project: training, bone structure, aesthetics, and cognition, built on protocols instead of guesswork.';
 
 export const DEFAULT_OG_IMAGE = '/img/og-default.jpg';
 
