@@ -37,6 +37,7 @@
     "url": "https://www.youtube.com/@biomaxxer",
     "kind": "social",
     "icon": "youtube",
+    "note": "Biomaxxer",
     "placeholder": false
   },
   {
@@ -46,7 +47,6 @@
     "url": "https://www.instagram.com/genetranscription/",
     "kind": "social",
     "icon": "instagram",
-    "image": "link-androlone",
     "note": "Androlone",
     "placeholder": false
   },
@@ -57,6 +57,7 @@
     "url": "https://www.tiktok.com/@biomaxxer",
     "kind": "social",
     "icon": "tiktok",
+    "note": "Biomaxxer",
     "placeholder": false
   },
   {
@@ -66,6 +67,7 @@
     "url": "https://x.com/biomaxxer0",
     "kind": "social",
     "icon": "x",
+    "note": "Biomaxxer",
     "placeholder": false
   },
   {
@@ -79,19 +81,32 @@
     "placeholder": false
   },
   {
-    "id": "amazon",
+    "id": "andrologne",
     "order": 9,
+    "label": "Andrologne - Androstadienone Spray",
+    "url": "https://andrologne.com/?ref=biomax",
+    "kind": "sponsor",
+    "icon": "link",
+    "image": "link-andrologne",
+    "sponsored": true,
+    "note": "Biomaxxer exclusive 3mg/mL androstadienone spray, a pheromone with potent effects on mood and libido.",
+    "placeholder": false
+  },
+  {
+    "id": "amazon",
+    "order": 10,
     "label": "Amazon storefront",
     "url": "https://www.amazon.com/shop/biomaxxer",
     "kind": "sponsor",
     "icon": "link",
+    "image": "link-amazon",
     "sponsored": true,
     "note": "Supplements, skin care, and more. Stuff I actually use.",
     "placeholder": false
   },
   {
     "id": "algorx",
-    "order": 10,
+    "order": 11,
     "label": "AlgoRX",
     "url": "https://algorx.com/?ref=BIOMAX",
     "kind": "sponsor",
@@ -103,7 +118,7 @@
   },
   {
     "id": "ruo",
-    "order": 11,
+    "order": 12,
     "label": "RUO",
     "url": "https://ruo.bio/?ref=biomax",
     "kind": "sponsor",
@@ -115,7 +130,7 @@
   },
   {
     "id": "disguised",
-    "order": 12,
+    "order": 13,
     "label": "Disguised Alpha",
     "url": "https://disguisedalpha.com/?coupon=biomax",
     "kind": "sponsor",
@@ -127,7 +142,7 @@
   },
   {
     "id": "enhancedlabs",
-    "order": 13,
+    "order": 14,
     "label": "Enhanced Labs",
     "url": "https://enhancedlabs.com/?ref=biomax",
     "kind": "sponsor",
@@ -139,7 +154,7 @@
   },
   {
     "id": "bulkpeptides",
-    "order": 14,
+    "order": 15,
     "label": "BulkPeptides",
     "url": "https://bulkpeptides.com/?ref=BIOMAX",
     "kind": "sponsor",
@@ -150,7 +165,7 @@
   },
   {
     "id": "performeds",
-    "order": 15,
+    "order": 16,
     "label": "Performeds",
     "url": "https://performeds.com/?ref=biomax",
     "kind": "sponsor",
@@ -162,7 +177,7 @@
   },
   {
     "id": "pumpotion",
-    "order": 16,
+    "order": 17,
     "label": "Pumpotion",
     "url": "https://pumpotion.com/?ref=biomax",
     "kind": "sponsor",
